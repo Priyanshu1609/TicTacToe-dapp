@@ -15,7 +15,7 @@ const Game = () => {
     const [winner, setWinner] = useState(null);
     const [full, setFull] = useState(false);
     const [current, setCurrent] = useState(null);
-    const [playing, setPlaying] = useState(true);
+    const [playing, setPlaying] = useState(false);
 
     const requestAccount = async () => {
         await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -31,6 +31,7 @@ const Game = () => {
             const contract = new ethers.Contract(contractAddress, TicTacToe.abi, signer)
             const transaction = await contract.placeWager({ value: ethers.utils.parseEther(wage) })
             await transaction.wait()
+            setPlaying(true)
         }
     }
     const handleInit = async () => {
@@ -66,6 +67,7 @@ const Game = () => {
     }
 
     const placeMarker = (position) => {
+        if(!playing) return;
         console.log("placing marker")
         let currentBoard = board
         if (space_check(position)) {
@@ -99,7 +101,7 @@ const Game = () => {
         if (winner !== null) {
             console.log("winner +" + winner.toString())
             return (
-                <div className="w-full h-screen animated fadeIn faster  fixed  flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover bg-dark backdrop-filter backdrop-blur-md bg-opacity-20 ">
+                <div className="w-full h-screen animated fadeIn faster  fixed  flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover bg-dark backdrop-filter backdrop-blur-sm bg-opacity-20 ">
                     <div className="absolute bg-black opacity-80 inset-0 z-0 ">
                         <div className="w-full   max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg mt-24  bg-white ">
                             <p className="text-5xl text-indigo-900 font-bold font-heading text-center mb-20">{winner[1]} wins! Well done!</p>
@@ -203,27 +205,28 @@ const Game = () => {
     }
 
     return (
-        <div className="h-screen w-full flex flex-col bg-blackblue text-white p-auto">
+        <div className="min-h-screen w-full flex flex-col bg-blackblue text-white items-center justify-center ">
             <div className="text-center  w-full px-14">
-                <div className="flex flex-col lg:flex-row justify-center">
-                    <div className="flex mx-2  mt-4 text-black rounded-xl overflow-hidden">
-                        <span className="text-sm w-1/4 brounded-l px-4 py-3 bg-gray-300">Player 1 Address</span>
-                        <input name='player1' value={p1} onChange={e => setP1(e.target.value)} className=" rounded-r px-4 py-2 w-3/4" type="text" placeholder="0x560c7D1759b86E3EaD22dc2483AfC8cA67e1f3Ad" />
+                <h1 className="text-4xl sm:text-5xl mt-3 mb-8">TicTacToe Dapp</h1>
+                <div className="flex flex-col lg:flex-row max-w-full mx-auto">
+                    <div className="flex lg:w-full mx-2  mt-4  text-black rounded-xl ">
+                        <span className=" w-24 rounded-l-lg px-4 py-3 bg-gold">P 1</span>
+                        <input name='player1' value={p1} onChange={e => setP1(e.target.value)} className=" rounded-r px-4 py-2 w-3/4 flex-grow" type="text" placeholder="0x560c7D1759b86E3EaD22dc2483AfC8cA67e1f3Ad" />
                     </div>
-                    <div className="flex mx-2  mt-4 text-black rounded-xl overflow-hidden">
-                        <span className="text-sm w-1/4 brounded-l px-4 py-3 bg-gray-300">Player 2 Address</span>
-                        <input name='player2' value={p2} onChange={e => setP2(e.target.value)} className=" rounded-r px-4 py-2 w-3/4" type="text" placeholder="0xfB2a58c4a63199b48f1385B945c154D74193dc6c" />
+                    <div className="flex lg:w-full mx-2 mt-4 text-black rounded-xl ">
+                        <span className=" w-24 rounded-l-lg px-4 py-3 bg-gold">P 2</span>
+                        <input name='player2' value={p2} onChange={e => setP2(e.target.value)} className=" rounded-r px-4 flex-grow w-3/4" type="text" placeholder="0xfB2a58c4a63199b48f1385B945c154D74193dc6c" />
                     </div>
 
-                    <button onClick={handleInit} className="bg-yellow-500 w-36 text-white px-10 py-2 rounded mt-4 border-2 border-yellow-500 hover:bg-white hover:text-yellow-500">Initialize</button>
+                    <button onClick={handleInit} className="bg-yellow-500 w-36 text-white  py-2 rounded mt-4 border-2 border-yellow-500 hover:bg-white hover:text-yellow-500 lg:ml-8 mx-auto lg:mx-1">Initialize</button>
                 </div>
-                <div className='flex justify-center'>
-                    <div className="flex mt-4 text-black rounded-xl overflow-hidden">
-                        <span className="text-sm brounded-l px-4 py-2 bg-gray-300">Stake : </span>
-                        <input value={wage} onChange={e => setWage(e.target.value)} className=" rounded-r px-4 py-2" type="number" placeholder="10eth" />
+                <div className='flex flex-col lg:flex-row w-full lg:w-1/2 mx-auto '>
+                    <div className="flex  mx-auto lg:ml-8 mt-4  text-black rounded-xl">
+                        <span className="  rounded-l-lg px-4 py-3 bg-gold">Stake</span>
+                        <input value={wage} onChange={e => setWage(e.target.value)} className=" rounded-r px-4 py-2 w-24" type="number" placeholder="10eth" />
                     </div>
 
-                    <button onClick={handleWager} className="bg-yellow-500 w-44 text-white p-10 py-2 rounded mt-4 border-2 border-yellow-500 hover:bg-white hover:text-yellow-500">Place Bets</button>
+                    <button onClick={handleWager} className="bg-yellow-500 w-36 text-white  py-2 rounded mt-4 border-2 border-yellow-500 hover:bg-white hover:text-yellow-500 lg:ml-8 mx-auto lg:mx-1">Place Bets</button>
                 </div>
 
                 {displayBoard(board)}
