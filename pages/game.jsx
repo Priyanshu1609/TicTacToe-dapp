@@ -57,13 +57,7 @@ const Game = () => {
     }
 
     const first = () => {
-        let index = Math.random() < 0.5;
-        if (index === false) {
-            return (["X", "0"])
-        } else {
-            return (["0", "X"])
-        }
-
+        return (["X", "0"])
     }
 
     const placeMarker = (position) => {
