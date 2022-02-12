@@ -28,7 +28,7 @@ const Home = () => {
             <a className="border border-yellow-500 p-8 py-7 hover:bg-blue-100"> </a>
             <a className="border border-yellow-500 p-8 py-7 hover:bg-blue-100"> </a>
           </div>
-          <p className=" text-yellow-500 mt-10 mb-6">This is a 2 player local game, so grab a friend and let's get started!</p>
+          <p className=" text-yellow-500 mt-10 mb-6">This is a 2 player local game, so grab a friend and let us get started!</p>
           <button onClick={() => router.push('/game')} className="bg-yellow-500 text-white p-10 py-2 rounded mt-8 border-2 border-yellow-500 hover:bg-white hover:text-yellow-500 ">Go</button>
         </div>
       </div>
