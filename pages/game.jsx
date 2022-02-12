@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router';
 import { ethers } from 'ethers'
 
-import TicTacToe from '../src/artifacts/contracts/TicTacToe.sol/TicTacToe.json'
+import TicTacToe from '../src/artifacts/contracts/Tictactoe.sol/TicTacToe.json'
 const contractAddress = '0xE98aC8FEa8167A2FcB9fE086a7dd5C73FB3F8c37'
 
 const Game = () => {
@@ -218,7 +218,7 @@ const Game = () => {
                         <input name='player2' value={p2} onChange={e => setP2(e.target.value)} className=" rounded-r px-4 flex-grow w-3/4" type="text" placeholder="0xfB2a58c4a63199b48f1385B945c154D74193dc6c" />
                     </div>
 
-                    <button onClick={handleInit} className="bg-yellow-500 w-36 text-white  py-2 rounded mt-4 border-2 border-yellow-500 hover:bg-white hover:text-yellow-500 lg:ml-8 mx-auto lg:mx-1">Initialize</button>
+                    <button onClick={handleInit} className="bg-yellow-500 w-36 text-white px-2 py-2 rounded mt-4 border-2 border-yellow-500 hover:bg-white hover:text-yellow-500 lg:ml-8 mx-auto lg:mx-1">Initialize</button>
                 </div>
                 <div className='flex flex-col lg:flex-row w-full lg:w-1/2 mx-auto '>
                     <div className="flex  mx-auto lg:ml-8 mt-4  text-black rounded-xl">
