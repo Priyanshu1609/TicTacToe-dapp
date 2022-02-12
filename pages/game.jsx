@@ -51,7 +51,7 @@ const Game = () => {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner()
             const contract = new ethers.Contract(contractAddress, TicTacToe.abi, signer)
-            const transaction = await contract.isWinner(p1);
+            const transaction = await contract.isWinner(winner[1]==='X'? p1 : p2);
             await transaction.wait()
         }
     }
