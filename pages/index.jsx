@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-export default function Home() {
+const Home = () => {
   const router = useRouter();
   return (
     <div className="bg-blackblue text-white">
@@ -36,7 +36,7 @@ export default function Home() {
   )
 }
 
-
+export default Home
 
 
 
